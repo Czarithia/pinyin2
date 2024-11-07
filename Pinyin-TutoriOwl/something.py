@@ -60,7 +60,7 @@ def make_prediction(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Audio Classification Prediction')
-    parser.add_argument('--model_fn', type=str, default='models/conv1d.h5',
+    parser.add_argument('--model_fn', type=str, default='models/conv2d.h5',
                         help='Path to the trained model file')
     parser.add_argument('--src_dir', type=str, default='test_data',
                         help='Directory containing subdirectories with WAV files')
