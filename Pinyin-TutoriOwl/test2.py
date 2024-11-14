@@ -6,6 +6,7 @@ import numpy as np
 from glob import glob
 import argparse
 import os
+import pandas as pd
 from tqdm import tqdm
 
 def make_prediction(args):
@@ -49,10 +50,13 @@ def make_prediction(args):
         y_pred = model.predict(X_batch)
         y_mean = np.mean(y_pred, axis=0)
         predicted_index = np.argmax(y_mean)
-        predicted_label = le.inverse_transform([predicted_index])[0]
 
-        # Print filename and predicted label
-        print(f'File: {os.path.basename(wav_fn)}, Predicted label: {predicted_label}')
+        # Check if the predicted index is within bounds
+        if predicted_index < len(classes):
+            predicted_label = le.inverse_transform([predicted_index])[0]
+            print(f'File: {os.path.basename(wav_fn)}, Predicted label: {predicted_label}')
+        else:
+            print(f'File: {os.path.basename(wav_fn)}, Predicted label: Unknown (index {predicted_index} out of bounds)')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Audio Classification Prediction')
@@ -64,7 +68,7 @@ if __name__ == '__main__':
                         help='Time in seconds to sample audio')
     parser.add_argument('--sr', type=int, default=16000,
                         help='Sample rate of clean audio')
-    parser.add_argument('--threshold', type=int, default=20,
+    parser.add_argument('--threshold', type=int, default=200,
                         help='Threshold magnitude for np.int16 dtype')
     args = parser.parse_args()
 

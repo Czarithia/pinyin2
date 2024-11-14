@@ -102,6 +102,21 @@ def train(args):
               epochs=40, verbose=1,
               callbacks=[csv_logger, cp])
 
+    # Load the model
+    model = tf.keras.models.load_model('conv2d_best_model.h5')
+
+    # Create a concrete function from the model
+    run_model = tf.function(lambda x: model(x))
+    concrete_func = run_model.get_concrete_function(tf.TensorSpec([1, 32, 32, 1], model.inputs[0].dtype))
+
+    # Convert to TFLite
+    converter = tf.lite.TFLiteConverter.from_concrete_functions([concrete_func])
+    tflite_model = converter.convert()
+
+    # Save the converted model
+    with open("pinyin_model.tflite", "wb") as f:
+        f.write(tflite_model)
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Audio Classification Training')
