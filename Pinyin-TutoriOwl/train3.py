@@ -36,15 +36,16 @@ def create_tflite_compatible_model(weights, input_shape, N_CLASSES=56):
                                 input_shape=input_shape))
     model_tflite.add(MagnitudeTflite())
     model_tflite.add(LayerNormalization(axis=2, name='batch_norm'))
-    model_tflite.add(layers.Conv2D(16, kernel_size=(5, 5), activation='tanh', padding='same', name='td_conv_2d_tanh'))
+    model_tflite.add(layers.Conv2D(32, kernel_size=(5, 5), activation='tanh', padding='same', name='td_conv_2d_tanh'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_1'))
-    model_tflite.add(layers.Conv2D(32, kernel_size=(5, 5), activation='relu', padding='same', name='conv2d_relu_2'))
-    model_tflite.add(layers.Conv2D(32, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_3'))
+    model_tflite.add(layers.Conv2D(64, kernel_size=(5, 5), activation='relu', padding='same', name='conv2d_relu_2'))
+    model_tflite.add(layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_3'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_2'))
-    model_tflite.add(layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_4'))
-    model_tflite.add(layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_5'))
+    model_tflite.add(layers.Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_4'))
+    model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_6'))
+    model_tflite.add(layers.Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_5'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_3'))
-    model_tflite.add(layers.Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_6'))
+    model_tflite.add(layers.Conv2D(254, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_6'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_4'))
     model_tflite.add(layers.Conv2D(254, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_7'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_5'))
@@ -152,11 +153,11 @@ def train(args):
                        params['N_CLASSES'], batch_size=batch_size)
     model = models[model_type]
     cp = ModelCheckpoint('models/{}.h5'.format(model_type), monitor='val_loss',
-                         save_best_only=True, save_weights_only=True,
+                         save_best_only=True, save_weights_only=False,
                          mode='auto', save_freq='epoch', verbose=1)
     csv_logger = CSVLogger(csv_path, append=False)
     model.fit(tg, validation_data=vg,
-              epochs=30, verbose=1,
+              epochs=40, verbose=1,
               callbacks=[csv_logger, cp])
 
 if __name__ == '__main__':
@@ -167,7 +168,7 @@ if __name__ == '__main__':
                         help='Sampling rate of the audio')
     parser.add_argument('--delta_time', type=float, default=1.0, 
                         help='Duration of the audio sample')
-    parser.add_argument('--batch_size', type=int, default=32,
+    parser.add_argument('--batch_size', type=int, default=64,
                         help='batch size')
     parser.add_argument('--src_root', type=str, default='clean',
                         help='Path to the directory with label folders')

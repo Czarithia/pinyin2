@@ -40,6 +40,7 @@ labels = ['a', 'ai', 'an', 'ang', 'ao', 'b', 'c', 'ch', 'd', 'e', 'ei', 'en', 'e
                 'l', 'm', 'n', 'o', 'ong', 'ou', 'p', 'q', 'r', 's', 'sh', 't', 'u', 'ua', 'uai', 'uan',
                 'uang', 'ui', 'un', 'uo', 'uu', 'uuan', 'uue', 'uun', 'x', 'z', 'zh'] 
 print("Predicted label:", labels[predicted_class[0]])
+print("Actual label: ang")
 print("********************************")
 input_data = preprocess_audio(r"C:/Users/Prinz/Downloads/pinyin2/Pinyin-TutoriOwl/test_data/ang/angtest2.wav")
 input_data = np.expand_dims(input_data, axis=0).astype(np.float32)  # Add batch dimension
