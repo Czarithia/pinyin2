@@ -19,14 +19,11 @@ import warnings
 from models import Conv1D, Conv2D, LSTM
 
 def save_tflite_model(model, save_path):
-    # Ensure the directory for save_path exists
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
-    
-    # Convert the model to TFLite
+
     converter = tf.lite.TFLiteConverter.from_keras_model(model)
     tflite_model = converter.convert()
-    
-    # Write the TFLite model to file
+
     with open(save_path, 'wb') as f:
         f.write(tflite_model)
         
@@ -39,21 +36,22 @@ def create_tflite_compatible_model(weights, input_shape, N_CLASSES=56):
                                 input_shape=input_shape))
     model_tflite.add(MagnitudeTflite())
     model_tflite.add(LayerNormalization(axis=2, name='batch_norm'))
-    model_tflite.add(layers.Conv2D(8, kernel_size=(7, 7), activation='tanh', padding='same', name='td_conv_2d_tanh'))
+    model_tflite.add(layers.Conv2D(16, kernel_size=(5, 5), activation='tanh', padding='same', name='td_conv_2d_tanh'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_1'))
-    model_tflite.add(layers.Conv2D(8, kernel_size=(5, 5), activation='relu', padding='same', name='conv2d_relu_2'))
-    model_tflite.add(layers.Conv2D(16, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_3'))
+    model_tflite.add(layers.Conv2D(32, kernel_size=(5, 5), activation='relu', padding='same', name='conv2d_relu_2'))
+    model_tflite.add(layers.Conv2D(32, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_3'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_2'))
-    model_tflite.add(layers.Conv2D(16, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_4'))
-    model_tflite.add(layers.Conv2D(32, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_5'))
+    model_tflite.add(layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_4'))
+    model_tflite.add(layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_5'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_3'))
-    model_tflite.add(layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_6'))
+    model_tflite.add(layers.Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_6'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_4'))
-    model_tflite.add(layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_7'))
+    model_tflite.add(layers.Conv2D(254, kernel_size=(3, 3), activation='relu', padding='same', name='conv2d_relu_7'))
     model_tflite.add(layers.MaxPooling2D(pool_size=(2, 2), padding='same', name='max_pool_2d_5'))
-    model_tflite.add(layers.Dropout(rate=0.2))
+    model_tflite.add(layers.Dropout(rate=0.25))
     model_tflite.add(layers.Flatten())
-    model_tflite.add(layers.Dense(128, activation='relu', activity_regularizer=l2(0.001), name='dense1'))
+    model_tflite.add(layers.Dense(254, activation='relu', activity_regularizer=l2(0.001), name='dense1'))
+    model_tflite.add(layers.Dense(128, activation='relu', activity_regularizer=l2(0.001), name='dense2'))
     model_tflite.add(layers.Dense(N_CLASSES, activation='softmax', name='softmax'))
 
     for i, layer in enumerate(model_tflite.layers):
