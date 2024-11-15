@@ -24,6 +24,12 @@ audio_files = [
     (r"C:/Users/Prinz/Downloads/pinyin2/Pinyin-TutoriOwl/test_data/ang/angtest3.wav", "ang"),
     (r"C:/Users/Prinz/Downloads/pinyin2/Pinyin-TutoriOwl/test_data/ang/angtest4.wav", "ang"),
     (r"C:/Users/Prinz/Downloads/pinyin2/Pinyin-TutoriOwl/test_data/zh/zh_test.wav", "zh"),
+    (r"C:\Users\Prinz\Downloads\pinyin2\Pinyin-TutoriOwl\test_data\ai\ai.wav", "ai"),
+    (r"C:\Users\Prinz\Downloads\pinyin2\Pinyin-TutoriOwl\test_data\ao\ao.wav", "ao"),
+    (r"C:\Users\Prinz\Downloads\pinyin2\Pinyin-TutoriOwl\test_data\iong\iong.wav", "iong"),
+    (r"C:\Users\Prinz\Downloads\pinyin2\Pinyin-TutoriOwl\test_data\j\j.wav", "j"),
+    (r"C:\Users\Prinz\Downloads\pinyin2\Pinyin-TutoriOwl\test_data\uan\uan.wav", "uan"),
+    (r"C:\Users\Prinz\Downloads\pinyin2\Pinyin-TutoriOwl\test_data\uang\uang.wav", "uang")
 ]
 
 total_files = len(audio_files)
