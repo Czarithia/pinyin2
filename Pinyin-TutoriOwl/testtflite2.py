@@ -56,10 +56,6 @@ predicted_class = np.argmax(output_data, axis=-1)
 print("Predicted class:", predicted_class)
 print("Prediction confidence:", output_data[0, predicted_class])
 
-labels = ['a', 'ai', 'an', 'ang', 'ao', 'b', 'c', 'ch', 'd', 'e', 'ei', 'en', 'eng', 'er', 'f',
-                'g', 'h', 'i', 'ia', 'ian', 'iang', 'iao', 'ie', 'in', 'ing', 'iong', 'iou', 'j', 'k',
-                'l', 'm', 'n', 'o', 'ong', 'ou', 'p', 'q', 'r', 's', 'sh', 't', 'u', 'ua', 'uai', 'uan',
-                'uang', 'ui', 'un', 'uo', 'uu', 'uuan', 'uue', 'uun', 'x', 'z', 'zh'] 
 print("Predicted label:", labels[predicted_class[0]])
 print("Actual Label:", 'ang')
 print("********************************")
@@ -78,10 +74,6 @@ predicted_class = np.argmax(output_data, axis=-1)
 print("Predicted class:", predicted_class)
 print("Prediction confidence:", output_data[0, predicted_class])
 
-labels = ['a', 'ai', 'an', 'ang', 'ao', 'b', 'c', 'ch', 'd', 'e', 'ei', 'en', 'eng', 'er', 'f',
-                'g', 'h', 'i', 'ia', 'ian', 'iang', 'iao', 'ie', 'in', 'ing', 'iong', 'iou', 'j', 'k',
-                'l', 'm', 'n', 'o', 'ong', 'ou', 'p', 'q', 'r', 's', 'sh', 't', 'u', 'ua', 'uai', 'uan',
-                'uang', 'ui', 'un', 'uo', 'uu', 'uuan', 'uue', 'uun', 'x', 'z', 'zh'] 
 print("Predicted label:", labels[predicted_class[0]])
 print("Actual Label:", 'ang')
 print("********************************")
@@ -100,10 +92,6 @@ predicted_class = np.argmax(output_data, axis=-1)
 print("Predicted class:", predicted_class)
 print("Prediction confidence:", output_data[0, predicted_class])
 
-labels = ['a', 'ai', 'an', 'ang', 'ao', 'b', 'c', 'ch', 'd', 'e', 'ei', 'en', 'eng', 'er', 'f',
-                'g', 'h', 'i', 'ia', 'ian', 'iang', 'iao', 'ie', 'in', 'ing', 'iong', 'iou', 'j', 'k',
-                'l', 'm', 'n', 'o', 'ong', 'ou', 'p', 'q', 'r', 's', 'sh', 't', 'u', 'ua', 'uai', 'uan',
-                'uang', 'ui', 'un', 'uo', 'uu', 'uuan', 'uue', 'uun', 'x', 'z', 'zh'] 
 print("Predicted label:", labels[predicted_class[0]])
 print("Actual Label:", 'ang')
 print("********************************")
@@ -122,9 +110,5 @@ predicted_class = np.argmax(output_data, axis=-1)
 print("Predicted class:", predicted_class)
 print("Prediction confidence:", output_data[0, predicted_class])
 
-labels = ['a', 'ai', 'an', 'ang', 'ao', 'b', 'c', 'ch', 'd', 'e', 'ei', 'en', 'eng', 'er', 'f',
-                'g', 'h', 'i', 'ia', 'ian', 'iang', 'iao', 'ie', 'in', 'ing', 'iong', 'iou', 'j', 'k',
-                'l', 'm', 'n', 'o', 'ong', 'ou', 'p', 'q', 'r', 's', 'sh', 't', 'u', 'ua', 'uai', 'uan',
-                'uang', 'ui', 'un', 'uo', 'uu', 'uuan', 'uue', 'uun', 'x', 'z', 'zh'] 
 print("Predicted label:", labels[predicted_class[0]])
 print("Actual Label:", 'zh')
