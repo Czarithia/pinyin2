@@ -10,25 +10,22 @@ import pandas as pd
 from tqdm import tqdm
 
 def make_prediction(args):
-    # Load the model
+
     model = load_model(args.model_fn,
         custom_objects={'STFT': STFT,
                         'Magnitude': Magnitude,
                         'ApplyFilterbank': ApplyFilterbank,
                         'MagnitudeToDecibel': MagnitudeToDecibel})
 
-    # Find all wav files in the specified directory
     wav_paths = glob(os.path.join(args.src_dir, '**/*.wav'), recursive=True)
     wav_paths = sorted([x.replace(os.sep, '/') for x in wav_paths])
 
-    # Extract class labels from subdirectory names within src_dir
     classes = sorted([d for d in os.listdir(args.src_dir) if os.path.isdir(os.path.join(args.src_dir, d))])
     le = LabelEncoder()
     le.fit(classes)
 
-    # Make predictions for each WAV file
     for wav_fn in tqdm(wav_paths, desc="Classifying WAV files"):
-        # Preprocess audio file
+
         rate, wav = downsample_mono(wav_fn, args.sr)
         mask, env = envelope(wav, rate, threshold=args.threshold)
         clean_wav = wav[mask]
@@ -46,12 +43,10 @@ def make_prediction(args):
 
         X_batch = np.array(batch, dtype=np.float32)
 
-        # Get model predictions
         y_pred = model.predict(X_batch)
         y_mean = np.mean(y_pred, axis=0)
         predicted_index = np.argmax(y_mean)
 
-        # Check if the predicted index is within bounds
         if predicted_index < len(classes):
             predicted_label = le.inverse_transform([predicted_index])[0]
             print(f'File: {os.path.basename(wav_fn)}, Predicted label: {predicted_label}')
